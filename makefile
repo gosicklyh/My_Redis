@@ -6,7 +6,13 @@ SRCS2 = Client.cpp
 OBJS1 = $(SRCS1:.cpp =.o)
 OBJS2 = $(SRCS2:.cpp =.o)
 
-all: $(TARGETS)
+all: start_message $(TARGETS) end_message
+
+start_message:
+	@echo "--------------"
+
+end_message:
+	@echo "--------------"
 
 Server: $(OBJS1)
 	g++ -o $@ $(OBJS1)
@@ -18,4 +24,4 @@ Client: $(OBJS2)
 	g++ -c $<
 
 clean:
-	rm -f $(TARGETS)
+	rm -f $(TARGETS) *.o

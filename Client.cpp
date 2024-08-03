@@ -1,6 +1,7 @@
 #include <arpa/inet.h>
 #include <assert.h>
 #include <cstdint>
+#include <cstdio>
 #include <errno.h>
 #include <iostream>
 #include <netinet/ip.h>
@@ -32,6 +33,7 @@ static int32_t read_full(int fd, char *buf, size_t n) {
 static int32_t write_all(int fd, const char *buf, size_t n) {
   while (n > 0) {
     ssize_t rv = write(fd, buf, n);
+    // std::cout << "\n```\n" << rv << "\n```\n";
     if (rv <= 0) {
       return -1; // error
     }
@@ -52,7 +54,11 @@ static int32_t query(int fd, const char *text) {
 
   char wbuf[4 + k_max_msg];
   memcpy(wbuf, &len, 4); // assume little endian
+  // std::cout << wbuf[5]<<std::endl;
+
+
   memcpy(&wbuf[4], text, len);
+  // printf("%s\n", wbuf);
   if (int32_t err = write_all(fd, wbuf, 4 + len)) {
     return err;
   }
@@ -108,15 +114,15 @@ int main() {
   // std::cin >> tsm;
   // int32_t err = query(fd, tsm.c_str());
   // multiple requests
-  int32_t err = query(fd, "hello1");
+  int32_t err = query(fd, "123");
   if (err) {
     goto L_DONE;
   }
-  err = query(fd, "hello2");
+  err = query(fd, "1234");
   if (err) {
     goto L_DONE;
   }
-  err = query(fd, "hello3");
+  err = query(fd, "12345");
   if (err) {
     goto L_DONE;
   }
