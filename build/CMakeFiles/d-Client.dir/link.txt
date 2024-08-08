@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/d-Client.dir/d-Client.cpp.o -o d-Client 

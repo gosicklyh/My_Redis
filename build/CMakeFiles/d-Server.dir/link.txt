@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/d-Server.dir/d-Server.cpp.o -o d-Server 
