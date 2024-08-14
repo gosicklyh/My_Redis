@@ -63,10 +63,8 @@ CMAKE_BINARY_DIR = /home/hollow/Vs-Cpp/this-redis/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/Client.dir/all
-all: CMakeFiles/Server.dir/all
-all: CMakeFiles/d-Client.dir/all
-all: CMakeFiles/d-Server.dir/all
+all: CMakeFiles/ServerApp.dir/all
+all: CMakeFiles/ClientApp.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -74,115 +72,61 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/Client.dir/clean
-clean: CMakeFiles/Server.dir/clean
-clean: CMakeFiles/d-Client.dir/clean
-clean: CMakeFiles/d-Server.dir/clean
+clean: CMakeFiles/ServerApp.dir/clean
+clean: CMakeFiles/ClientApp.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/Client.dir
+# Target rules for target CMakeFiles/ServerApp.dir
 
 # All Build rule for target.
-CMakeFiles/Client.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=1,2 "Built target Client"
-.PHONY : CMakeFiles/Client.dir/all
+CMakeFiles/ServerApp.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=3,4,5,6 "Built target ServerApp"
+.PHONY : CMakeFiles/ServerApp.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Client.dir/all
+CMakeFiles/ServerApp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ServerApp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 0
-.PHONY : CMakeFiles/Client.dir/rule
+.PHONY : CMakeFiles/ServerApp.dir/rule
 
 # Convenience name for target.
-Client: CMakeFiles/Client.dir/rule
-.PHONY : Client
+ServerApp: CMakeFiles/ServerApp.dir/rule
+.PHONY : ServerApp
 
 # clean rule for target.
-CMakeFiles/Client.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/clean
-.PHONY : CMakeFiles/Client.dir/clean
+CMakeFiles/ServerApp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/clean
+.PHONY : CMakeFiles/ServerApp.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/Server.dir
+# Target rules for target CMakeFiles/ClientApp.dir
 
 # All Build rule for target.
-CMakeFiles/Server.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=3,4 "Built target Server"
-.PHONY : CMakeFiles/Server.dir/all
+CMakeFiles/ClientApp.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ClientApp.dir/build.make CMakeFiles/ClientApp.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ClientApp.dir/build.make CMakeFiles/ClientApp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=1,2 "Built target ClientApp"
+.PHONY : CMakeFiles/ClientApp.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Server.dir/rule: cmake_check_build_system
+CMakeFiles/ClientApp.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Server.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ClientApp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 0
-.PHONY : CMakeFiles/Server.dir/rule
+.PHONY : CMakeFiles/ClientApp.dir/rule
 
 # Convenience name for target.
-Server: CMakeFiles/Server.dir/rule
-.PHONY : Server
+ClientApp: CMakeFiles/ClientApp.dir/rule
+.PHONY : ClientApp
 
 # clean rule for target.
-CMakeFiles/Server.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/clean
-.PHONY : CMakeFiles/Server.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/d-Client.dir
-
-# All Build rule for target.
-CMakeFiles/d-Client.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/d-Client.dir/build.make CMakeFiles/d-Client.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/d-Client.dir/build.make CMakeFiles/d-Client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=5,6 "Built target d-Client"
-.PHONY : CMakeFiles/d-Client.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/d-Client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/d-Client.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 0
-.PHONY : CMakeFiles/d-Client.dir/rule
-
-# Convenience name for target.
-d-Client: CMakeFiles/d-Client.dir/rule
-.PHONY : d-Client
-
-# clean rule for target.
-CMakeFiles/d-Client.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/d-Client.dir/build.make CMakeFiles/d-Client.dir/clean
-.PHONY : CMakeFiles/d-Client.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/d-Server.dir
-
-# All Build rule for target.
-CMakeFiles/d-Server.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/d-Server.dir/build.make CMakeFiles/d-Server.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/d-Server.dir/build.make CMakeFiles/d-Server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=7,8 "Built target d-Server"
-.PHONY : CMakeFiles/d-Server.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/d-Server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/d-Server.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles 0
-.PHONY : CMakeFiles/d-Server.dir/rule
-
-# Convenience name for target.
-d-Server: CMakeFiles/d-Server.dir/rule
-.PHONY : d-Server
-
-# clean rule for target.
-CMakeFiles/d-Server.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/d-Server.dir/build.make CMakeFiles/d-Server.dir/clean
-.PHONY : CMakeFiles/d-Server.dir/clean
+CMakeFiles/ClientApp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ClientApp.dir/build.make CMakeFiles/ClientApp.dir/clean
+.PHONY : CMakeFiles/ClientApp.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

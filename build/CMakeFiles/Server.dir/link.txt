@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/Server.dir/Server.cpp.o -o Server 
+/usr/bin/c++ -g CMakeFiles/Server.dir/Server.cpp.o CMakeFiles/Server.dir/Reader.cpp.o CMakeFiles/Server.dir/Writer.cpp.o -o Server 

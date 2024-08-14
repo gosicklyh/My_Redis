@@ -1,6 +1,4 @@
-/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/Client.dir
-/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/Server.dir
-/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/d-Client.dir
-/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/d-Server.dir
+/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/ServerApp.dir
+/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/ClientApp.dir
 /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/edit_cache.dir
 /home/hollow/Vs-Cpp/this-redis/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/s-Client.dir/s-Client.cpp.o -o s-Client 

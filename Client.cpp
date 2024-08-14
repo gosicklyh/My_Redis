@@ -1,10 +1,10 @@
 #include <arpa/inet.h>
 #include <assert.h>
-#include <cstdint>
-#include <cstdio>
 #include <errno.h>
-#include <iostream>
 #include <netinet/ip.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -33,7 +33,6 @@ static int32_t read_full(int fd, char *buf, size_t n) {
 static int32_t write_all(int fd, const char *buf, size_t n) {
   while (n > 0) {
     ssize_t rv = write(fd, buf, n);
-    // std::cout << "\n```\n" << rv << "\n```\n";
     if (rv <= 0) {
       return -1; // error
     }
@@ -46,7 +45,7 @@ static int32_t write_all(int fd, const char *buf, size_t n) {
 
 const size_t k_max_msg = 4096;
 
-static int32_t query(int fd, const char *text) {
+static int32_t send_req(int fd, const char *text) {
   uint32_t len = (uint32_t)strlen(text);
   if (len > k_max_msg) {
     return -1;
@@ -54,16 +53,11 @@ static int32_t query(int fd, const char *text) {
 
   char wbuf[4 + k_max_msg];
   memcpy(wbuf, &len, 4); // assume little endian
-  // std::cout << wbuf[5]<<std::endl;
-
-
   memcpy(&wbuf[4], text, len);
-  // printf("%s\n", wbuf);
-  if (int32_t err = write_all(fd, wbuf, 4 + len)) {
-    return err;
-  }
+  return write_all(fd, wbuf, 4 + len);
+}
 
-  // 4 bytes header
+static int32_t read_res(int fd) {
   char rbuf[4 + k_max_msg + 1];
   errno = 0;
   int32_t err = read_full(fd, rbuf, 4);
@@ -76,20 +70,19 @@ static int32_t query(int fd, const char *text) {
     return err;
   }
 
+  uint32_t len = 0;
   memcpy(&len, rbuf, 4); // assume little endian
   if (len > k_max_msg) {
     msg("too long");
     return -1;
   }
 
-  // reply body
   err = read_full(fd, &rbuf[4], len);
   if (err) {
     msg("read() error");
     return err;
   }
 
-  // do something
   rbuf[4 + len] = '\0';
   printf("server says: %s\n", &rbuf[4]);
   return 0;
@@ -110,24 +103,35 @@ int main() {
     die("connect");
   }
 
-  // std::string tsm;
-  // std::cin >> tsm;
-  // int32_t err = query(fd, tsm.c_str());
-  // multiple requests
-  int32_t err = query(fd, "123");
-  if (err) {
-    goto L_DONE;
-  }
-  err = query(fd, "1234");
-  if (err) {
-    goto L_DONE;
-  }
-  err = query(fd, "12345");
-  if (err) {
-    goto L_DONE;
+  // User input loop
+  char input[256];
+  while (1) {
+    printf("Enter your query (or 'exit' to quit): ");
+    if (fgets(input, sizeof(input), stdin) == NULL) {
+      msg("Error reading input");
+      break;
+    }
+
+    // Remove trailing newline
+    input[strcspn(input, "\n")] = '\0';
+
+    if (strcmp(input, "exit") == 0) {
+      break;
+    }
+
+    int32_t err = send_req(fd, input);
+    if (err) {
+      msg("Error sending request");
+      break;
+    }
+
+    err = read_res(fd);
+    if (err) {
+      msg("Error reading response");
+      break;
+    }
   }
 
-L_DONE:
   close(fd);
   return 0;
 }

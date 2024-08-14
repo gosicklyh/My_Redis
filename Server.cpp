@@ -1,13 +1,16 @@
+// Server.cpp
+#include "Conn.h"
 #include <arpa/inet.h>
-#include <assert.h>
+#include <cassert>
 #include <errno.h>
+#include <fcntl.h>
 #include <netinet/ip.h>
-#include <iostream>
-#include <string.h>
+#include <poll.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <unistd.h>
-
-static void msg(const char *msg) { fprintf(stderr, "%s\n", msg); }
+#include <vector>
 
 static void die(const char *msg) {
   int err = errno;
@@ -15,74 +18,72 @@ static void die(const char *msg) {
   abort();
 }
 
-const size_t k_max_msg = 4096;
-
-static int32_t read_full(int fd, char *buf, size_t n) {
-  while (n > 0) {
-    ssize_t rv = read(fd, buf, n);
-    if (rv <= 0) {
-      return -1; // error, or unexpected EOF
-    }
-    assert((size_t)rv <= n);
-    n -= (size_t)rv;
-    buf += rv;
-    // printf("测试: %s\n", buf);
-  }
-  return 0;
-}
-
-static int32_t write_all(int fd, const char *buf, size_t n) {
-  while (n > 0) {
-    ssize_t rv = write(fd, buf, n);
-    if (rv <= 0) {
-      return -1; // error
-    }
-    assert((size_t)rv <= n);
-    n -= (size_t)rv;
-    buf += rv;
-  }
-  return 0;
-}
-
-static int32_t one_request(int connfd) {
-  // 4 bytes header
-  char rbuf[4 + k_max_msg + 1];
+static void fd_set_nb(int fd) {
   errno = 0;
-  int32_t err = read_full(connfd, rbuf, 4);
-  if (err) {
-    if (errno == 0) {
-      msg("EOF");
-    } else {
-      msg("read() error");
-    }
-    return err;
+  int flags = fcntl(fd, F_GETFL, 0);
+  if (errno) {
+    die("fcntl error");
   }
+  flags |= O_NONBLOCK;
+  errno = 0;
+  (void)fcntl(fd, F_SETFL, flags);
+  if (errno) {
+    die("fcntl error");
+  }
+}
 
-  uint32_t len = 0;
-  memcpy(&len, rbuf, 4); // assume little endian
-  if (len > k_max_msg) {
-    msg("too long");
+static void conn_put(std::vector<Conn *> &fd2conn, Conn *conn) {
+  if (fd2conn.size() <= (size_t)conn->fd) {
+    fd2conn.resize(conn->fd + 1);
+  }
+  fd2conn[conn->fd] = conn;
+}
+
+static int32_t accept_new_conn(std::vector<Conn *> &fd2conn, int fd) {
+  struct sockaddr_in client_addr = {};
+  socklen_t socklen = sizeof(client_addr);
+  int connfd = accept(fd, (struct sockaddr *)&client_addr, &socklen);
+  if (connfd < 0) {
+    perror("accept() error");
     return -1;
   }
 
-  // request body
-  err = read_full(connfd, &rbuf[4], len);
-  if (err) {
-    msg("read() error");
-    return err;
+  fd_set_nb(connfd);
+
+  Conn *conn = new Conn();
+  if (!conn) {
+    close(connfd);
+    return -1;
   }
+  conn->fd = connfd;
+  conn_put(fd2conn, conn);
 
-  // do something
-  rbuf[4 + len] = '\0';
-  printf("client says: %s\n", &rbuf[4]);
+  return 0;
+}
 
-  // reply using the same protocol
-  const char reply[] = "world";
-  char wbuf[4 + sizeof(reply)];
-  len = (uint32_t)strlen(reply);
-  memcpy(wbuf, &len, 4);
-  memcpy(&wbuf[4], reply, len);
-  return write_all(connfd, wbuf, 4 + len);
+static void connection_io(Conn *conn) {
+  if (conn->state == 0) { // STATE_REQ
+    while (true) {
+      if (!conn->reader.try_fill_buffer(conn->fd)) {
+        conn->state = 2; // STATE_END
+        break;
+      }
+
+      if (!conn->reader.try_one_request(conn->fd, conn->writer.get_wbuf(),
+                                        conn->writer.get_wbuf_size(),
+                                        conn->state)) {
+        break;
+      }
+    }
+  } else if (conn->state == 1) { // STATE_RES
+    while (true) {
+      if (!conn->writer.try_flush_buffer(conn->fd, conn->state)) {
+        break;
+      }
+    }
+  } else {
+    assert(0);
+  }
 }
 
 int main() {
@@ -91,43 +92,63 @@ int main() {
     die("socket()");
   }
 
-  // this is needed for most server applications
   int val = 1;
   setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
 
-  // bind
   struct sockaddr_in addr = {};
   addr.sin_family = AF_INET;
   addr.sin_port = ntohs(1234);
-  addr.sin_addr.s_addr = ntohl(0); // wildcard address 0.0.0.0
+  addr.sin_addr.s_addr = ntohl(0);
   int rv = bind(fd, (const sockaddr *)&addr, sizeof(addr));
   if (rv) {
     die("bind()");
   }
 
-  // listen
   rv = listen(fd, SOMAXCONN);
   if (rv) {
     die("listen()");
   }
 
+  std::vector<Conn *> fd2conn;
+  fd_set_nb(fd);
+
+  std::vector<struct pollfd> poll_args;
   while (true) {
-    // accept
-    struct sockaddr_in client_addr = {};
-    socklen_t socklen = sizeof(client_addr);
-    int connfd = accept(fd, (struct sockaddr *)&client_addr, &socklen);
-    if (connfd < 0) {
-      continue; // error
+    poll_args.clear();
+    struct pollfd pfd = {fd, POLLIN, 0};
+    poll_args.push_back(pfd);
+    for (Conn *conn : fd2conn) {
+      if (!conn) {
+        continue;
+      }
+      struct pollfd pfd = {};
+      pfd.fd = conn->fd;
+      pfd.events =
+          (conn->state == 0) ? POLLIN : POLLOUT; // STATE_REQ or STATE_RES
+      pfd.events |= POLLERR;
+      poll_args.push_back(pfd);
     }
 
-    while (true) {
-      // here the server only serves one client connection at once
-      int32_t err = one_request(connfd);
-      if (err) {
-        break;
+    rv = poll(poll_args.data(), (nfds_t)poll_args.size(), 1000);
+    if (rv < 0) {
+      die("poll");
+    }
+
+    for (size_t i = 1; i < poll_args.size(); ++i) {
+      if (poll_args[i].revents) {
+        Conn *conn = fd2conn[poll_args[i].fd];
+        connection_io(conn);
+        if (conn->state == 2) { // STATE_END
+          fd2conn[conn->fd] = NULL;
+          (void)close(conn->fd);
+          delete conn;
+        }
       }
     }
-    close(connfd);
+
+    if (poll_args[0].revents) {
+      (void)accept_new_conn(fd2conn, fd);
+    }
   }
 
   return 0;
