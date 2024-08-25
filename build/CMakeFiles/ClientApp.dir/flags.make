@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/hollow/Vs-Cpp/this-redis
 
-CXX_FLAGS = -g
+CXX_FLAGS = -g -std=gnu++11
 

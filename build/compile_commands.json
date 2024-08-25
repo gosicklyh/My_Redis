@@ -1,22 +1,22 @@
 [
 {
   "directory": "/home/hollow/Vs-Cpp/this-redis/build",
-  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -o CMakeFiles/ServerApp.dir/Server.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Server.cpp",
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/ServerApp.dir/Server.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Server.cpp",
   "file": "/home/hollow/Vs-Cpp/this-redis/Server.cpp"
 },
 {
   "directory": "/home/hollow/Vs-Cpp/this-redis/build",
-  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -o CMakeFiles/ServerApp.dir/Reader.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Reader.cpp",
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/ServerApp.dir/Reader.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Reader.cpp",
   "file": "/home/hollow/Vs-Cpp/this-redis/Reader.cpp"
 },
 {
   "directory": "/home/hollow/Vs-Cpp/this-redis/build",
-  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -o CMakeFiles/ServerApp.dir/Writer.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Writer.cpp",
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/ServerApp.dir/Writer.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Writer.cpp",
   "file": "/home/hollow/Vs-Cpp/this-redis/Writer.cpp"
 },
 {
   "directory": "/home/hollow/Vs-Cpp/this-redis/build",
-  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -o CMakeFiles/ClientApp.dir/Client.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Client.cpp",
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/ClientApp.dir/Client.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Client.cpp",
   "file": "/home/hollow/Vs-Cpp/this-redis/Client.cpp"
 }
 ]

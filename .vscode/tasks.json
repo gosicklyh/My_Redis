@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "cmake --build build", // 构建项目的命令
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "detail": "用于构建项目的任务"
+    }
+  ]
+}

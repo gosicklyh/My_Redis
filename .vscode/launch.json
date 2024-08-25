@@ -2,23 +2,54 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C/C++ Runner: Debug Session",
+      "name": "调试 ServerApp",
       "type": "cppdbg",
       "request": "launch",
-      "args": [],
+      "program": "${workspaceFolder}/build/ServerApp", // ServerApp 可执行文件路径
+      "args": [], // 如果需要，添加命令行参数
       "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
       "externalConsole": false,
-      "cwd": "/home/hollow/Vs-Cpp/this-redis",
-      "program": "/home/hollow/Vs-Cpp/this-redis/build/Debug/outDebug",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
       "setupCommands": [
         {
-          "description": "Enable pretty-printing for gdb",
+          "description": "启用 GDB 的 pretty-printing",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "preLaunchTask": "build",
+      "miDebuggerPath": "/usr/bin/gdb", // GDB 的路径
+      "logging": {
+        "engineLogging": false
+      },
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "name": "调试 ClientApp",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/ClientApp", //  ClientApp 可执行文件路径
+      "args": [], // 如果需要，添加命令行参数
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "ignoreFailures": true,
+          "text": "-enable-pretty-printing"
+        }
+      ],
+      "preLaunchTask": "build",
+      "miDebuggerPath": "/usr/bin/gdb", // GDB 的路径
+      "logging": {
+        "engineLogging": false
+      },
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
