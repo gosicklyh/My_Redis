@@ -1,5 +1,5 @@
-CMakeFiles/ServerApp.dir/Server.cpp.o: \
- /home/hollow/Vs-Cpp/this-redis/Server.cpp /usr/include/stdc-predef.h \
+CMakeFiles/ServerApp.dir/read.cpp.o: \
+ /home/hollow/Vs-Cpp/this-redis/read.cpp /usr/include/stdc-predef.h \
  /home/hollow/Vs-Cpp/this-redis/read.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -143,12 +143,7 @@ CMakeFiles/ServerApp.dir/Server.cpp.o: \
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
- /usr/include/c++/11/bits/istream.tcc \
- /home/hollow/Vs-Cpp/this-redis/write.h /usr/include/c++/11/vector \
- /usr/include/c++/11/bits/stl_uninitialized.h \
- /usr/include/c++/11/bits/stl_vector.h \
- /usr/include/c++/11/bits/stl_bvector.h \
- /usr/include/c++/11/bits/vector.tcc /usr/include/arpa/inet.h \
+ /usr/include/c++/11/bits/istream.tcc /usr/include/netinet/ip.h \
  /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/socket.h \
@@ -165,14 +160,8 @@ CMakeFiles/ServerApp.dir/Server.cpp.o: \
  /usr/include/x86_64-linux-gnu/asm/sockios.h \
  /usr/include/asm-generic/sockios.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
- /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/assert.h \
- /usr/include/fcntl.h /usr/include/x86_64-linux-gnu/bits/fcntl.h \
- /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
- /usr/include/linux/falloc.h /usr/include/x86_64-linux-gnu/bits/stat.h \
- /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
- /usr/include/netinet/ip.h /usr/include/string.h /usr/include/strings.h \
- /usr/include/x86_64-linux-gnu/sys/epoll.h \
- /usr/include/x86_64-linux-gnu/bits/epoll.h /usr/include/unistd.h \
+ /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/string.h \
+ /usr/include/strings.h /usr/include/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h \

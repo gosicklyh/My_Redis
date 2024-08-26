@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories(${CMAKE_SOURCE_DIR})
 
 # 添加主应用程序的可执行文件
-add_executable(ServerApp Server.cpp)
+add_executable(ServerApp Server.cpp read.cpp write.cpp)
 
 # 添加单独的 Client 应用程序的可执行文件
 add_executable(ClientApp Client.cpp)

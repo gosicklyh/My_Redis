@@ -1,11 +1,12 @@
+// Server.cpp
+#include "read.h"
+#include "write.h"
 #include <arpa/inet.h>
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <iostream>
 #include <netinet/ip.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/epoll.h>
 #include <sys/socket.h>
@@ -40,28 +41,6 @@ static void fd_set_nb(int fd) {
   }
 }
 
-const size_t k_max_msg = 4096; // 最大消息长度
-
-// 连接状态
-enum {
-  STATE_REQ = 0, // 处理请求
-  STATE_RES = 1, // 发送响应
-  STATE_END = 2, // 连接结束
-};
-
-// 连接结构体
-struct Conn {
-  int fd = -1;
-  uint32_t state = 0; // 当前状态
-  // 读缓冲区
-  size_t rbuf_size = 0;
-  uint8_t rbuf[4 + k_max_msg];
-  // 写缓冲区
-  size_t wbuf_size = 0;
-  size_t wbuf_sent = 0;
-  uint8_t wbuf[4 + k_max_msg];
-};
-
 // 将连接保存到 fd2conn 映射中
 static void conn_put(std::vector<Conn *> &fd2conn, struct Conn *conn) {
   if (fd2conn.size() <= (size_t)conn->fd) {
@@ -81,7 +60,7 @@ static int32_t accept_new_conn(std::vector<Conn *> &fd2conn, int fd,
     msg("accept() error");
     return -1; // 错误
   }
-
+  std::cout << "建立新链接: " << connfd << std::endl;
   // 设置新连接为非阻塞模式
   fd_set_nb(connfd);
   // 创建 Conn 结构体
@@ -110,118 +89,9 @@ static int32_t accept_new_conn(std::vector<Conn *> &fd2conn, int fd,
 
   return 0;
 }
-
-static void state_req(Conn *conn);
-static void state_res(Conn *conn);
-
-static bool try_one_request(Conn *conn) {
-  // 尝试从缓冲区中解析请求
-  if (conn->rbuf_size < 4) {
-    // 缓冲区数据不足，等待下次迭代
-    return false;
-  }
-  uint32_t len = 0;
-  memcpy(&len, &conn->rbuf[0], 4);
-  if (len > k_max_msg) {
-    msg("请求太长");
-    conn->state = STATE_END;
-    return false;
-  }
-  if (4 + len > conn->rbuf_size) {
-    // 缓冲区数据不足，等待下次迭代
-    return false;
-  }
-
-  // 收到一个完整的请求
-  printf("client says: %.*s\n", len, &conn->rbuf[4]);
-
-  // 生成回显响应
-  memcpy(&conn->wbuf[0], &len, 4);
-  memcpy(&conn->wbuf[4], &conn->rbuf[4], len);
-  conn->wbuf_size = 4 + len;
-
-  // 从缓冲区移除已处理的请求
-  size_t remain = conn->rbuf_size - 4 - len;
-  if (remain) {
-    memmove(conn->rbuf, &conn->rbuf[4 + len], remain);
-  }
-  conn->rbuf_size = remain;
-
-  // 切换状态到响应
-  conn->state = STATE_RES;
-  state_res(conn);
-
-  // 如果请求已完全处理，继续外层循环
-  return (conn->state == STATE_REQ);
-}
-
-static bool try_fill_buffer(Conn *conn) {
-  // 尝试填充缓冲区
-  assert(conn->rbuf_size < sizeof(conn->rbuf));
-  ssize_t rv = 0;
-  do {
-    size_t cap = sizeof(conn->rbuf) - conn->rbuf_size;
-    rv = read(conn->fd, &conn->rbuf[conn->rbuf_size], cap);
-  } while (rv < 0 && errno == EINTR);
-  if (rv < 0 && errno == EAGAIN) {
-    // 读取到 EAGAIN，停止读取
-    return false;
-  }
-  if (rv < 0) {
-    msg("read() 错误");
-    conn->state = STATE_END;
-    return false;
-  }
-  if (rv == 0) {
-    if (conn->rbuf_size > 0) {
-      msg("意外的 EOF");
-    } else {
-      msg("EOF");
-    }
-    conn->state = STATE_END;
-    return false;
-  }
-
-  conn->rbuf_size += (size_t)rv;
-  assert(conn->rbuf_size <= sizeof(conn->rbuf));
-
-  // 逐个处理请求
-  while (try_one_request(conn)) {
-  }
-  return (conn->state == STATE_REQ);
-}
-
 static void state_req(Conn *conn) {
   while (try_fill_buffer(conn)) {
   }
-}
-
-static bool try_flush_buffer(Conn *conn) {
-  ssize_t rv = 0;
-  do {
-    size_t remain = conn->wbuf_size - conn->wbuf_sent;
-    rv = write(conn->fd, &conn->wbuf[conn->wbuf_sent], remain);
-  } while (rv < 0 && errno == EINTR);
-  if (rv < 0 && errno == EAGAIN) {
-    // 读取到 EAGAIN，停止写入
-    return false;
-  }
-  if (rv < 0) {
-    msg("write() 错误");
-    conn->state = STATE_END;
-    return false;
-  }
-  conn->wbuf_sent += (size_t)rv;
-  assert(conn->wbuf_sent <= conn->wbuf_size);
-  if (conn->wbuf_sent == conn->wbuf_size) {
-    // 响应已完全发送，切换回请求状态
-    conn->state = STATE_REQ;
-    conn->wbuf_sent = 0;
-    conn->wbuf_size = 0;
-    return false;
-  }
-  // 缓冲区中仍有数据，尝试继续写入
-  return true;
 }
 
 static void state_res(Conn *conn) {
@@ -294,11 +164,10 @@ int main() {
 
     for (int i = 0; i < n; ++i) {
       if (events[i].data.fd == fd) {
-        // 监听的 fd 有新连接
-        while (accept_new_conn(fd2conn, fd, epoll_fd) == 0) {
-        }
+        // 建立新链接
+        accept_new_conn(fd2conn, fd, epoll_fd);
       } else {
-        // 客户端 fd 有事件
+        // 处理客户端fd事件
         Conn *conn = fd2conn[events[i].data.fd];
         if (conn) {
           connection_io(conn);
