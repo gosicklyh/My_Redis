@@ -58,12 +58,12 @@ static int32_t accept_new_conn(std::vector<Conn *> &fd2conn, int fd,
   int connfd = accept(fd, (struct sockaddr *)&client_addr, &socklen);
   if (connfd < 0) {
     msg("accept() error");
-    return -1; // 错误
+    return -1; 
   }
   std::cout << "建立新链接: " << connfd << std::endl;
   // 设置新连接为非阻塞模式
   fd_set_nb(connfd);
-  // 创建 Conn 结构体
+
   struct Conn *conn = (struct Conn *)malloc(sizeof(struct Conn));
   if (!conn) {
     close(connfd);
