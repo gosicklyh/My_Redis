@@ -8,9 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/hollow/Vs-Cpp/this-redis/Reader.cpp" "CMakeFiles/ServerApp.dir/Reader.cpp.o" "gcc" "CMakeFiles/ServerApp.dir/Reader.cpp.o.d"
   "/home/hollow/Vs-Cpp/this-redis/Server.cpp" "CMakeFiles/ServerApp.dir/Server.cpp.o" "gcc" "CMakeFiles/ServerApp.dir/Server.cpp.o.d"
-  "/home/hollow/Vs-Cpp/this-redis/Writer.cpp" "CMakeFiles/ServerApp.dir/Writer.cpp.o" "gcc" "CMakeFiles/ServerApp.dir/Writer.cpp.o.d"
   )
 
 # Targets to which this target links.

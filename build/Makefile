@@ -166,30 +166,6 @@ Client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ClientApp.dir/build.make CMakeFiles/ClientApp.dir/Client.cpp.s
 .PHONY : Client.cpp.s
 
-Reader.o: Reader.cpp.o
-.PHONY : Reader.o
-
-# target to build an object file
-Reader.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Reader.cpp.o
-.PHONY : Reader.cpp.o
-
-Reader.i: Reader.cpp.i
-.PHONY : Reader.i
-
-# target to preprocess a source file
-Reader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Reader.cpp.i
-.PHONY : Reader.cpp.i
-
-Reader.s: Reader.cpp.s
-.PHONY : Reader.s
-
-# target to generate assembly for a file
-Reader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Reader.cpp.s
-.PHONY : Reader.cpp.s
-
 Server.o: Server.cpp.o
 .PHONY : Server.o
 
@@ -214,30 +190,6 @@ Server.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Server.cpp.s
 .PHONY : Server.cpp.s
 
-Writer.o: Writer.cpp.o
-.PHONY : Writer.o
-
-# target to build an object file
-Writer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Writer.cpp.o
-.PHONY : Writer.cpp.o
-
-Writer.i: Writer.cpp.i
-.PHONY : Writer.i
-
-# target to preprocess a source file
-Writer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Writer.cpp.i
-.PHONY : Writer.cpp.i
-
-Writer.s: Writer.cpp.s
-.PHONY : Writer.s
-
-# target to generate assembly for a file
-Writer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Writer.cpp.s
-.PHONY : Writer.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -251,15 +203,9 @@ help:
 	@echo "... Client.o"
 	@echo "... Client.i"
 	@echo "... Client.s"
-	@echo "... Reader.o"
-	@echo "... Reader.i"
-	@echo "... Reader.s"
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"
-	@echo "... Writer.o"
-	@echo "... Writer.i"
-	@echo "... Writer.s"
 .PHONY : help
 
 
