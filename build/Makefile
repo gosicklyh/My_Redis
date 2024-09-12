@@ -130,6 +130,19 @@ ServerApp/fast:
 .PHONY : ServerApp/fast
 
 #=============================================================================
+# Target rules for targets named D-ServerApp
+
+# Build rule for target.
+D-ServerApp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 D-ServerApp
+.PHONY : D-ServerApp
+
+# fast build rule for target.
+D-ServerApp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ServerApp.dir/build.make CMakeFiles/D-ServerApp.dir/build
+.PHONY : D-ServerApp/fast
+
+#=============================================================================
 # Target rules for targets named ClientApp
 
 # Build rule for target.
@@ -141,6 +154,19 @@ ClientApp: cmake_check_build_system
 ClientApp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ClientApp.dir/build.make CMakeFiles/ClientApp.dir/build
 .PHONY : ClientApp/fast
+
+#=============================================================================
+# Target rules for targets named D-ClientApp
+
+# Build rule for target.
+D-ClientApp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 D-ClientApp
+.PHONY : D-ClientApp
+
+# fast build rule for target.
+D-ClientApp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ClientApp.dir/build.make CMakeFiles/D-ClientApp.dir/build
+.PHONY : D-ClientApp/fast
 
 Client.o: Client.cpp.o
 .PHONY : Client.o
@@ -165,6 +191,54 @@ Client.s: Client.cpp.s
 Client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ClientApp.dir/build.make CMakeFiles/ClientApp.dir/Client.cpp.s
 .PHONY : Client.cpp.s
+
+D-Client.o: D-Client.cpp.o
+.PHONY : D-Client.o
+
+# target to build an object file
+D-Client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ClientApp.dir/build.make CMakeFiles/D-ClientApp.dir/D-Client.cpp.o
+.PHONY : D-Client.cpp.o
+
+D-Client.i: D-Client.cpp.i
+.PHONY : D-Client.i
+
+# target to preprocess a source file
+D-Client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ClientApp.dir/build.make CMakeFiles/D-ClientApp.dir/D-Client.cpp.i
+.PHONY : D-Client.cpp.i
+
+D-Client.s: D-Client.cpp.s
+.PHONY : D-Client.s
+
+# target to generate assembly for a file
+D-Client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ClientApp.dir/build.make CMakeFiles/D-ClientApp.dir/D-Client.cpp.s
+.PHONY : D-Client.cpp.s
+
+D-Server.o: D-Server.cpp.o
+.PHONY : D-Server.o
+
+# target to build an object file
+D-Server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ServerApp.dir/build.make CMakeFiles/D-ServerApp.dir/D-Server.cpp.o
+.PHONY : D-Server.cpp.o
+
+D-Server.i: D-Server.cpp.i
+.PHONY : D-Server.i
+
+# target to preprocess a source file
+D-Server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ServerApp.dir/build.make CMakeFiles/D-ServerApp.dir/D-Server.cpp.i
+.PHONY : D-Server.cpp.i
+
+D-Server.s: D-Server.cpp.s
+.PHONY : D-Server.s
+
+# target to generate assembly for a file
+D-Server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/D-ServerApp.dir/build.make CMakeFiles/D-ServerApp.dir/D-Server.cpp.s
+.PHONY : D-Server.cpp.s
 
 Server.o: Server.cpp.o
 .PHONY : Server.o
@@ -247,10 +321,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... ClientApp"
+	@echo "... D-ClientApp"
+	@echo "... D-ServerApp"
 	@echo "... ServerApp"
 	@echo "... Client.o"
 	@echo "... Client.i"
 	@echo "... Client.s"
+	@echo "... D-Client.o"
+	@echo "... D-Client.i"
+	@echo "... D-Client.s"
+	@echo "... D-Server.o"
+	@echo "... D-Server.i"
+	@echo "... D-Server.s"
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"

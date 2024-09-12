@@ -16,7 +16,9 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2,
+						3
 					]
 				}
 			],
@@ -32,7 +34,9 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2,
+						3
 					]
 				}
 			],
@@ -41,8 +45,22 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ClientApp::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ClientApp-Debug-c6c6af80df40b751773a.json",
+					"jsonFile" : "target-ClientApp-Debug-3768cb6c8348919396db.json",
 					"name" : "ClientApp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "D-ClientApp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-D-ClientApp-Debug-444f3c1e5ca8bd75ea2c.json",
+					"name" : "D-ClientApp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "D-ServerApp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-D-ServerApp-Debug-a35e504b8c443d675ac3.json",
+					"name" : "D-ServerApp",
 					"projectIndex" : 0
 				},
 				{

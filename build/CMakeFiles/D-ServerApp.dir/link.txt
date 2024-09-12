@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/D-ServerApp.dir/D-Server.cpp.o -o D-ServerApp 

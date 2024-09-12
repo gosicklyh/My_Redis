@@ -16,7 +16,17 @@
 },
 {
   "directory": "/home/hollow/Vs-Cpp/this-redis/build",
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/D-ServerApp.dir/D-Server.cpp.o -c /home/hollow/Vs-Cpp/this-redis/D-Server.cpp",
+  "file": "/home/hollow/Vs-Cpp/this-redis/D-Server.cpp"
+},
+{
+  "directory": "/home/hollow/Vs-Cpp/this-redis/build",
   "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/ClientApp.dir/Client.cpp.o -c /home/hollow/Vs-Cpp/this-redis/Client.cpp",
   "file": "/home/hollow/Vs-Cpp/this-redis/Client.cpp"
+},
+{
+  "directory": "/home/hollow/Vs-Cpp/this-redis/build",
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/D-ClientApp.dir/D-Client.cpp.o -c /home/hollow/Vs-Cpp/this-redis/D-Client.cpp",
+  "file": "/home/hollow/Vs-Cpp/this-redis/D-Client.cpp"
 }
 ]
