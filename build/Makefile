@@ -264,29 +264,53 @@ Server.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Server.cpp.s
 .PHONY : Server.cpp.s
 
-io_read.o: io_read.cpp.o
-.PHONY : io_read.o
+do_someing.o: do_someing.cpp.o
+.PHONY : do_someing.o
 
 # target to build an object file
-io_read.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/io_read.cpp.o
-.PHONY : io_read.cpp.o
+do_someing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/do_someing.cpp.o
+.PHONY : do_someing.cpp.o
 
-io_read.i: io_read.cpp.i
-.PHONY : io_read.i
+do_someing.i: do_someing.cpp.i
+.PHONY : do_someing.i
 
 # target to preprocess a source file
-io_read.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/io_read.cpp.i
-.PHONY : io_read.cpp.i
+do_someing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/do_someing.cpp.i
+.PHONY : do_someing.cpp.i
 
-io_read.s: io_read.cpp.s
-.PHONY : io_read.s
+do_someing.s: do_someing.cpp.s
+.PHONY : do_someing.s
 
 # target to generate assembly for a file
-io_read.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/io_read.cpp.s
-.PHONY : io_read.cpp.s
+do_someing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/do_someing.cpp.s
+.PHONY : do_someing.cpp.s
+
+io_Read&Writer.o: io_Read&Writer.cpp.o
+.PHONY : io_Read&Writer.o
+
+# target to build an object file
+io_Read&Writer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o"
+.PHONY : io_Read&Writer.cpp.o
+
+io_Read&Writer.i: io_Read&Writer.cpp.i
+.PHONY : io_Read&Writer.i
+
+# target to preprocess a source file
+io_Read&Writer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.i"
+.PHONY : io_Read&Writer.cpp.i
+
+io_Read&Writer.s: io_Read&Writer.cpp.s
+.PHONY : io_Read&Writer.s
+
+# target to generate assembly for a file
+io_Read&Writer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.s"
+.PHONY : io_Read&Writer.cpp.s
 
 # Help Target
 help:
@@ -312,9 +336,12 @@ help:
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"
-	@echo "... io_read.o"
-	@echo "... io_read.i"
-	@echo "... io_read.s"
+	@echo "... do_someing.o"
+	@echo "... do_someing.i"
+	@echo "... do_someing.s"
+	@echo "... io_Read&Writer.o"
+	@echo "... io_Read&Writer.i"
+	@echo "... io_Read&Writer.s"
 .PHONY : help
 
 

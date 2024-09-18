@@ -1,3 +1,6 @@
+#ifndef IO_MAIN_H
+#define IO_MAIN_H
+
 #include <cerrno>
 #include <cstddef>
 #include <cstdint>
@@ -43,3 +46,5 @@ static void die(const char *msg) {
   fprintf(stderr, "[%d] %s\n", err, msg);
   abort();
 }
+
+#endif // IO_MAIN_H

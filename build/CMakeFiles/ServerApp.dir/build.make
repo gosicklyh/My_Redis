@@ -83,33 +83,49 @@ CMakeFiles/ServerApp.dir/Server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ServerApp.dir/Server.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hollow/Vs-Cpp/this-redis/Server.cpp -o CMakeFiles/ServerApp.dir/Server.cpp.s
 
-CMakeFiles/ServerApp.dir/io_read.cpp.o: CMakeFiles/ServerApp.dir/flags.make
-CMakeFiles/ServerApp.dir/io_read.cpp.o: ../io_read.cpp
-CMakeFiles/ServerApp.dir/io_read.cpp.o: CMakeFiles/ServerApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ServerApp.dir/io_read.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ServerApp.dir/io_read.cpp.o -MF CMakeFiles/ServerApp.dir/io_read.cpp.o.d -o CMakeFiles/ServerApp.dir/io_read.cpp.o -c /home/hollow/Vs-Cpp/this-redis/io_read.cpp
+CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o: CMakeFiles/ServerApp.dir/flags.make
+CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o: ../io_Read&Writer.cpp
+CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o: CMakeFiles/ServerApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o" -MF "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o.d" -o "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o" -c "/home/hollow/Vs-Cpp/this-redis/io_Read&Writer.cpp"
 
-CMakeFiles/ServerApp.dir/io_read.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ServerApp.dir/io_read.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hollow/Vs-Cpp/this-redis/io_read.cpp > CMakeFiles/ServerApp.dir/io_read.cpp.i
+CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/hollow/Vs-Cpp/this-redis/io_Read&Writer.cpp" > "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.i"
 
-CMakeFiles/ServerApp.dir/io_read.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ServerApp.dir/io_read.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hollow/Vs-Cpp/this-redis/io_read.cpp -o CMakeFiles/ServerApp.dir/io_read.cpp.s
+CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/hollow/Vs-Cpp/this-redis/io_Read&Writer.cpp" -o "CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.s"
+
+CMakeFiles/ServerApp.dir/do_someing.cpp.o: CMakeFiles/ServerApp.dir/flags.make
+CMakeFiles/ServerApp.dir/do_someing.cpp.o: ../do_someing.cpp
+CMakeFiles/ServerApp.dir/do_someing.cpp.o: CMakeFiles/ServerApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ServerApp.dir/do_someing.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ServerApp.dir/do_someing.cpp.o -MF CMakeFiles/ServerApp.dir/do_someing.cpp.o.d -o CMakeFiles/ServerApp.dir/do_someing.cpp.o -c /home/hollow/Vs-Cpp/this-redis/do_someing.cpp
+
+CMakeFiles/ServerApp.dir/do_someing.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ServerApp.dir/do_someing.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hollow/Vs-Cpp/this-redis/do_someing.cpp > CMakeFiles/ServerApp.dir/do_someing.cpp.i
+
+CMakeFiles/ServerApp.dir/do_someing.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ServerApp.dir/do_someing.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hollow/Vs-Cpp/this-redis/do_someing.cpp -o CMakeFiles/ServerApp.dir/do_someing.cpp.s
 
 # Object files for target ServerApp
 ServerApp_OBJECTS = \
 "CMakeFiles/ServerApp.dir/Server.cpp.o" \
-"CMakeFiles/ServerApp.dir/io_read.cpp.o"
+"CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o" \
+"CMakeFiles/ServerApp.dir/do_someing.cpp.o"
 
 # External object files for target ServerApp
 ServerApp_EXTERNAL_OBJECTS =
 
 ServerApp: CMakeFiles/ServerApp.dir/Server.cpp.o
-ServerApp: CMakeFiles/ServerApp.dir/io_read.cpp.o
+ServerApp: CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o
+ServerApp: CMakeFiles/ServerApp.dir/do_someing.cpp.o
 ServerApp: CMakeFiles/ServerApp.dir/build.make
 ServerApp: CMakeFiles/ServerApp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ServerApp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hollow/Vs-Cpp/this-redis/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ServerApp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ServerApp.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

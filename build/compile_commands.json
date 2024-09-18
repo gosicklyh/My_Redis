@@ -6,8 +6,13 @@
 },
 {
   "directory": "/home/hollow/Vs-Cpp/this-redis/build",
-  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/ServerApp.dir/io_read.cpp.o -c /home/hollow/Vs-Cpp/this-redis/io_read.cpp",
-  "file": "/home/hollow/Vs-Cpp/this-redis/io_read.cpp"
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o \"CMakeFiles/ServerApp.dir/io_Read&Writer.cpp.o\" -c \"/home/hollow/Vs-Cpp/this-redis/io_Read&Writer.cpp\"",
+  "file": "/home/hollow/Vs-Cpp/this-redis/io_Read&Writer.cpp"
+},
+{
+  "directory": "/home/hollow/Vs-Cpp/this-redis/build",
+  "command": "/usr/bin/c++  -I/home/hollow/Vs-Cpp/this-redis -g -std=gnu++11 -o CMakeFiles/ServerApp.dir/do_someing.cpp.o -c /home/hollow/Vs-Cpp/this-redis/do_someing.cpp",
+  "file": "/home/hollow/Vs-Cpp/this-redis/do_someing.cpp"
 },
 {
   "directory": "/home/hollow/Vs-Cpp/this-redis/build",
