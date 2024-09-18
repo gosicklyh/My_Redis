@@ -14,6 +14,26 @@
 #include <unistd.h>
 #include <vector>
 
+const size_t k_max_msg = 4096;  // 最大消息长度
+const size_t k_max_args = 1024; // 最大参数数量
+
+enum {
+  RES_OK = 0,  // 成功
+  RES_ERR = 1, // 错误
+  RES_NX = 2,  // 不存在
+};
+
+// 定义连接状态
+enum {
+  STATE_REQ = 0, // 请求状态
+  STATE_RES = 1, // 响应状态
+  STATE_END = 2, // 连接结束，标记为需要删除
+};
+
+// 键值存储的数据结构，使用 map 作为占位符
+static std::map<std::string, std::string> g_map;
+
+// 输出消息的辅助函数
 static void msg(const char *msg) { fprintf(stderr, "%s\n", msg); }
 
 static void die(const char *msg) {
@@ -22,6 +42,7 @@ static void die(const char *msg) {
   abort();
 }
 
+// 将文件描述符设置为非阻塞模式
 static void fd_set_nb(int fd) {
   errno = 0;
   int flags = fcntl(fd, F_GETFL, 0);
@@ -39,26 +60,22 @@ static void fd_set_nb(int fd) {
   }
 }
 
-const size_t k_max_msg = 4096;
-
-enum {
-  STATE_REQ = 0,
-  STATE_RES = 1,
-  STATE_END = 2, // mark the connection for deletion
-};
-
+// 连接结构体
 struct Conn {
   int fd = -1;
-  uint32_t state = 0; // either STATE_REQ or STATE_RES
-  // buffer for reading
+  uint32_t state = 0; // 连接状态，STATE_REQ 或 STATE_RES
+
+  // 读缓冲区
   size_t rbuf_size = 0;
   uint8_t rbuf[4 + k_max_msg];
-  // buffer for writing
+
+  // 写缓冲区
   size_t wbuf_size = 0;
   size_t wbuf_sent = 0;
   uint8_t wbuf[4 + k_max_msg];
 };
 
+// 连接对象存入 fd2conn 中
 static void conn_put(std::vector<Conn *> &fd2conn, struct Conn *conn) {
   if (fd2conn.size() <= (size_t)conn->fd) {
     fd2conn.resize(conn->fd + 1);
@@ -66,19 +83,20 @@ static void conn_put(std::vector<Conn *> &fd2conn, struct Conn *conn) {
   fd2conn[conn->fd] = conn;
 }
 
+// 接受新的连接
 static int32_t accept_new_conn(std::vector<Conn *> &fd2conn, int fd) {
-  // accept
+  // 接受连接
   struct sockaddr_in client_addr = {};
   socklen_t socklen = sizeof(client_addr);
   int connfd = accept(fd, (struct sockaddr *)&client_addr, &socklen);
   if (connfd < 0) {
     msg("accept() error");
-    return -1; // error
+    return -1;
   }
 
-  // set the new connection fd to nonblocking mode
+  // 将新的连接设置为非阻塞模式
   fd_set_nb(connfd);
-  // creating the struct Conn
+
   struct Conn *conn = (struct Conn *)malloc(sizeof(struct Conn));
   if (!conn) {
     close(connfd);
@@ -96,8 +114,7 @@ static int32_t accept_new_conn(std::vector<Conn *> &fd2conn, int fd) {
 static void state_req(Conn *conn);
 static void state_res(Conn *conn);
 
-const size_t k_max_args = 1024;
-
+// 解析请求数据
 static int32_t parse_req(const uint8_t *data, size_t len,
                          std::vector<std::string> &out) {
   if (len < 4) {
@@ -124,25 +141,17 @@ static int32_t parse_req(const uint8_t *data, size_t len,
   }
 
   if (pos != len) {
-    return -1; // trailing garbage
+    return -1; // 有多余的数据
   }
   return 0;
 }
 
-enum {
-  RES_OK = 0,
-  RES_ERR = 1,
-  RES_NX = 2,
-};
 
-// The data structure for the key space. This is just a placeholder
-// until we implement a hashtable in the next chapter.
-static std::map<std::string, std::string> g_map;
-
+// 处理 get 命令
 static uint32_t do_get(const std::vector<std::string> &cmd, uint8_t *res,
                        uint32_t *reslen) {
   if (!g_map.count(cmd[1])) {
-    return RES_NX;
+    return RES_NX; // key 不存在
   }
   std::string &val = g_map[cmd[1]];
   assert(val.size() <= k_max_msg);
@@ -151,6 +160,7 @@ static uint32_t do_get(const std::vector<std::string> &cmd, uint8_t *res,
   return RES_OK;
 }
 
+// 处理 set 命令
 static uint32_t do_set(const std::vector<std::string> &cmd, uint8_t *res,
                        uint32_t *reslen) {
   (void)res;
@@ -159,6 +169,7 @@ static uint32_t do_set(const std::vector<std::string> &cmd, uint8_t *res,
   return RES_OK;
 }
 
+// 处理 del 命令
 static uint32_t do_del(const std::vector<std::string> &cmd, uint8_t *res,
                        uint32_t *reslen) {
   (void)res;
@@ -167,10 +178,12 @@ static uint32_t do_del(const std::vector<std::string> &cmd, uint8_t *res,
   return RES_OK;
 }
 
+// 判断命令是否匹配
 static bool cmd_is(const std::string &word, const char *cmd) {
   return 0 == strcasecmp(word.c_str(), cmd);
 }
 
+// 处理请求
 static int32_t do_request(const uint8_t *req, uint32_t reqlen,
                           uint32_t *rescode, uint8_t *res, uint32_t *reslen) {
   std::vector<std::string> cmd;
@@ -185,7 +198,7 @@ static int32_t do_request(const uint8_t *req, uint32_t reqlen,
   } else if (cmd.size() == 2 && cmd_is(cmd[0], "del")) {
     *rescode = do_del(cmd, res, reslen);
   } else {
-    // cmd is not recognized
+    // 未识别的命令
     *rescode = RES_ERR;
     const char *msg = "Unknown cmd";
     strcpy((char *)res, msg);
@@ -195,10 +208,11 @@ static int32_t do_request(const uint8_t *req, uint32_t reqlen,
   return 0;
 }
 
+// 尝试处理一个请求
 static bool try_one_request(Conn *conn) {
-  // try to parse a request from the buffer
+  // 尝试从缓冲区解析一个请求
   if (conn->rbuf_size < 4) {
-    // not enough data in the buffer. Will retry in the next iteration
+    // 缓冲区数据不足，等待更多数据
     return false;
   }
   uint32_t len = 0;
@@ -209,11 +223,11 @@ static bool try_one_request(Conn *conn) {
     return false;
   }
   if (4 + len > conn->rbuf_size) {
-    // not enough data in the buffer. Will retry in the next iteration
+    // 数据不完整，等待更多数据
     return false;
   }
 
-  // got one request, generate the response.
+  // 获取一个完整的请求，生成响应
   uint32_t rescode = 0;
   uint32_t wlen = 0;
   int32_t err =
@@ -227,25 +241,24 @@ static bool try_one_request(Conn *conn) {
   memcpy(&conn->wbuf[4], &rescode, 4);
   conn->wbuf_size = 4 + wlen;
 
-  // remove the request from the buffer.
-  // note: frequent memmove is inefficient.
-  // note: need better handling for production code.
+  // 从读取缓冲区中移除已处理的请求
+  // 注意：频繁的 memmove 操作效率低下，生产代码需优化
   size_t remain = conn->rbuf_size - 4 - len;
   if (remain) {
     memmove(conn->rbuf, &conn->rbuf[4 + len], remain);
   }
   conn->rbuf_size = remain;
 
-  // change state
+  // 改变状态
   conn->state = STATE_RES;
   state_res(conn);
 
-  // continue the outer loop if the request was fully processed
+  // 如果请求已完全处理，继续外部循环
   return (conn->state == STATE_REQ);
 }
 
+// 尝试填充读取缓冲区
 static bool try_fill_buffer(Conn *conn) {
-  // try to fill the buffer
   assert(conn->rbuf_size < sizeof(conn->rbuf));
   ssize_t rv = 0;
   do {
@@ -253,7 +266,7 @@ static bool try_fill_buffer(Conn *conn) {
     rv = read(conn->fd, &conn->rbuf[conn->rbuf_size], cap);
   } while (rv < 0 && errno == EINTR);
   if (rv < 0 && errno == EAGAIN) {
-    // got EAGAIN, stop.
+    // 读取到 EAGAIN，停止读取
     return false;
   }
   if (rv < 0) {
@@ -274,18 +287,19 @@ static bool try_fill_buffer(Conn *conn) {
   conn->rbuf_size += (size_t)rv;
   assert(conn->rbuf_size <= sizeof(conn->rbuf));
 
-  // Try to process requests one by one.
-  // Why is there a loop? Please read the explanation of "pipelining".
+  // 逐个处理请求
   while (try_one_request(conn)) {
   }
   return (conn->state == STATE_REQ);
 }
 
+// 请求状态处理
 static void state_req(Conn *conn) {
   while (try_fill_buffer(conn)) {
   }
 }
 
+// 尝试刷新写入缓冲区
 static bool try_flush_buffer(Conn *conn) {
   ssize_t rv = 0;
   do {
@@ -293,7 +307,7 @@ static bool try_flush_buffer(Conn *conn) {
     rv = write(conn->fd, &conn->wbuf[conn->wbuf_sent], remain);
   } while (rv < 0 && errno == EINTR);
   if (rv < 0 && errno == EAGAIN) {
-    // got EAGAIN, stop.
+    // 写入返回 EAGAIN，停止写入
     return false;
   }
   if (rv < 0) {
@@ -304,28 +318,30 @@ static bool try_flush_buffer(Conn *conn) {
   conn->wbuf_sent += (size_t)rv;
   assert(conn->wbuf_sent <= conn->wbuf_size);
   if (conn->wbuf_sent == conn->wbuf_size) {
-    // response was fully sent, change state back
+    // 响应已全部发送，切换回请求状态
     conn->state = STATE_REQ;
     conn->wbuf_sent = 0;
     conn->wbuf_size = 0;
     return false;
   }
-  // still got some data in wbuf, could try to write again
+  // 还有数据未发送，继续尝试写入
   return true;
 }
 
+// 响应状态处理
 static void state_res(Conn *conn) {
   while (try_flush_buffer(conn)) {
   }
 }
 
+// 处理连接的 I/O
 static void connection_io(Conn *conn) {
   if (conn->state == STATE_REQ) {
     state_req(conn);
   } else if (conn->state == STATE_RES) {
     state_res(conn);
   } else {
-    assert(0); // not expected
+    assert(0); 
   }
 }
 
@@ -338,37 +354,36 @@ int main() {
   int val = 1;
   setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
 
-  // bind
+  // 绑定地址和端口
   struct sockaddr_in addr = {};
   addr.sin_family = AF_INET;
   addr.sin_port = ntohs(1234);
-  addr.sin_addr.s_addr = ntohl(0); // wildcard address 0.0.0.0
+  addr.sin_addr.s_addr = ntohl(0); // 通配地址 0.0.0.0
   int rv = bind(fd, (const sockaddr *)&addr, sizeof(addr));
   if (rv) {
     die("bind()");
   }
 
-  // listen
+  // 监听
   rv = listen(fd, SOMAXCONN);
   if (rv) {
     die("listen()");
   }
 
-  // a map of all client connections, keyed by fd
+  // 存储所有客户端连接的映射，键为文件描述符
   std::vector<Conn *> fd2conn;
 
-  // set the listen fd to nonblocking mode
+  // 将监听套接字设置为非阻塞模式
   fd_set_nb(fd);
 
-  // the event loop
+  // 事件循环
   std::vector<struct pollfd> poll_args;
   while (true) {
-    // prepare the arguments of the poll()
     poll_args.clear();
-    // for convenience, the listening fd is put in the first position
+    // 为方便起见，监听套接字放在第一个位置
     struct pollfd pfd = {fd, POLLIN, 0};
     poll_args.push_back(pfd);
-    // connection fds
+    // 连接的文件描述符
     for (Conn *conn : fd2conn) {
       if (!conn) {
         continue;
@@ -380,21 +395,21 @@ int main() {
       poll_args.push_back(pfd);
     }
 
-    // poll for active fds
-    // the timeout argument doesn't matter here
+    // 轮询活动的文件描述符
+    // 超时时间参数在这里无关紧要
     int rv = poll(poll_args.data(), (nfds_t)poll_args.size(), 1000);
     if (rv < 0) {
       die("poll");
     }
 
-    // process active connections
+    // 处理活动的连接
     for (size_t i = 1; i < poll_args.size(); ++i) {
       if (poll_args[i].revents) {
         Conn *conn = fd2conn[poll_args[i].fd];
         connection_io(conn);
         if (conn->state == STATE_END) {
-          // client closed normally, or something bad happened.
-          // destroy this connection
+          // 客户端正常关闭，或发生错误
+          // 销毁此连接
           fd2conn[conn->fd] = NULL;
           (void)close(conn->fd);
           free(conn);
@@ -402,7 +417,7 @@ int main() {
       }
     }
 
-    // try to accept a new connection if the listening fd is active
+    // 如果监听套接字有活动，尝试接受新连接
     if (poll_args[0].revents) {
       (void)accept_new_conn(fd2conn, fd);
     }
