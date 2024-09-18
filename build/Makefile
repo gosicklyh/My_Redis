@@ -264,53 +264,29 @@ Server.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/Server.cpp.s
 .PHONY : Server.cpp.s
 
-read.o: read.cpp.o
-.PHONY : read.o
+io_read.o: io_read.cpp.o
+.PHONY : io_read.o
 
 # target to build an object file
-read.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/read.cpp.o
-.PHONY : read.cpp.o
+io_read.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/io_read.cpp.o
+.PHONY : io_read.cpp.o
 
-read.i: read.cpp.i
-.PHONY : read.i
-
-# target to preprocess a source file
-read.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/read.cpp.i
-.PHONY : read.cpp.i
-
-read.s: read.cpp.s
-.PHONY : read.s
-
-# target to generate assembly for a file
-read.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/read.cpp.s
-.PHONY : read.cpp.s
-
-write.o: write.cpp.o
-.PHONY : write.o
-
-# target to build an object file
-write.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/write.cpp.o
-.PHONY : write.cpp.o
-
-write.i: write.cpp.i
-.PHONY : write.i
+io_read.i: io_read.cpp.i
+.PHONY : io_read.i
 
 # target to preprocess a source file
-write.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/write.cpp.i
-.PHONY : write.cpp.i
+io_read.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/io_read.cpp.i
+.PHONY : io_read.cpp.i
 
-write.s: write.cpp.s
-.PHONY : write.s
+io_read.s: io_read.cpp.s
+.PHONY : io_read.s
 
 # target to generate assembly for a file
-write.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/write.cpp.s
-.PHONY : write.cpp.s
+io_read.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ServerApp.dir/build.make CMakeFiles/ServerApp.dir/io_read.cpp.s
+.PHONY : io_read.cpp.s
 
 # Help Target
 help:
@@ -336,12 +312,9 @@ help:
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"
-	@echo "... read.o"
-	@echo "... read.i"
-	@echo "... read.s"
-	@echo "... write.o"
-	@echo "... write.i"
-	@echo "... write.s"
+	@echo "... io_read.o"
+	@echo "... io_read.i"
+	@echo "... io_read.s"
 .PHONY : help
 
 
